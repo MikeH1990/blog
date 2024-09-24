@@ -1,0 +1,41 @@
+---
+import fetchArticles from "../lib/fetchArticles";
+const { class: className } = Astro.props;
+
+const featuredArticle = await fetchArticles({count: 1, featured: true})
+console.log(featuredArticle)
+---
+
+<div class:list={["featured-article-container", className]}>
+  <h2 class="visually-hidden">Featured Article</h2>
+  <article>
+    <img src="/images/web-3-desktop.jpg" alt="">
+    <h3>{featuredArticle[0].data?.title}</h3>
+    <div class="flow">
+      <p>{featuredArticle[0].data?.content}</p>
+      <a href={`/article/${featuredArticle[0].data.slug}`} class="button">Read More <span class="visually-hidden">about The Bright Future of Web 3.0?</span></a>
+    </div>
+  </article>
+</div>
+  
+<style>
+    .featured-article-container {
+      container-type: inline-size;
+    }
+
+    article {
+      display: grid;
+      gap: 1rem;
+      @container (width > calc(25ch * 2)) {
+        gap: 2rem 1rem;
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    img {
+      grid-column: 1 / -1;
+    } /* Added missing closing brace */
+
+    h3 {
+      font-size: var(--fs-900);
+    }
+</style>

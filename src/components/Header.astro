@@ -1,0 +1,142 @@
+<script>
+  const navToggle = document.querySelector('[aria-controls="primary-nav"]');
+
+  navToggle.addEventListener('click', () => {
+    const navOpened = navToggle.getAttribute('aria-expanded');
+    if (navOpened === 'false') {
+      navToggle.setAttribute('aria-expanded', "true")
+    } else {
+      navToggle.setAttribute('aria-expanded', "false")
+    }
+  })
+</script>
+
+<header>
+  <a href="#main-content" class="skip-to-main">Skip to main content</a>
+  <h1 class="visually-hidden">The W.</h1>
+  <a href="/" class="logo">
+    <img src="/images/logo.svg" alt="">
+  </a>
+
+  <button aria-controls="primary-nav" aria-expanded="false">
+    <span class="visually-hidden">Menu</span>
+    <img src="/images/icon-menu.svg" class="icon-hamburger" alt="">
+    <img src="/images/icon-menu-close.svg" class="icon-close" alt="">
+  </button>
+
+  <nav id="primary-nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="#">New</a></li>
+      <li><a href="#">Popular</a></li>
+      <li><a href="#">Trending</a></li>
+      <li><a href="#">Categories</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-block:
+      clamp(1.5rem, 5vmax, 5rem)
+      clamp(1.5rem, 5vmax, 2rem)
+  }
+
+  ul {
+    list-style:none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    gap: 1rem;
+  }
+
+  a {
+  text-decoration: none;
+  color: currentColor;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--clr-accent-400)
+  }
+}
+
+button {
+  display: none;
+}
+
+@media (width < 750px) {
+  button {
+    display:block;
+    position: absolute;
+    z-index: 10;
+    right: 1rem;
+    padding: 1rem;
+    background: transparent;
+    border: 0;
+
+    .icon-close {
+      display: none;
+    }
+  }
+  nav{
+    display: none;
+  }
+
+  [aria-expanded='true'] {
+    .icon-hamburger {
+      display: none;
+    }
+    .icon-close {
+      display: block;
+    }
+  }
+
+  [aria-expanded='true'] + nav {
+    display: block;
+    position:absolute;
+    inset: 0;
+    width: 80%;
+    margin-left:auto;
+    z-index: 1;
+    background-color: var(--clr-neutral-100);
+    box-shadow: 0 0 0 100vmax hsl(0 0 0 / .2)
+  }
+
+  ul {
+    margin-top: 20vh;
+    margin-left: 3rem;
+    display: grid;
+    gap: 2rem;
+    font-size: var(--fs-600);
+  }
+
+  a{
+    color: var(--clr-neutral-900);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--clr-accent-400);
+    }
+  }
+}
+
+.skip-to-main {
+  position: absolute;
+  font-weight: var(--fw-bold);
+  padding: 1em 3em;
+  translate: -400%;
+
+  &:focus-visible, &:hover {
+    background-color: var(--clr-accent-400);
+    color: var(--clr-neutral-900);
+    translate: 0;
+  }
+}
+</style>
